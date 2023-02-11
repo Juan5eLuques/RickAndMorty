@@ -1,15 +1,17 @@
-import { useState } from "react";
-import { CharacterList } from "./components/CharacterList";
-import { useCharacter } from "./hooks/useCharacters";
-import { Character } from "./types/Character";
+import { Route, Routes } from "react-router-dom";
+import { CharacterPage } from "./components/CharacterPage";
+import { DescriptionCharacter } from "./pages/DescriptionCharacter";
+import { ViewCharacters } from "./pages/ViewCharacters";
 
 function App() {
-  const [page, setPage] = useState(1);
   return (
     <div className="App">
-      <h1>Rick and morty app</h1>
-      <CharacterList page={page} />
-      <button onClick={() => setPage(page + 1)}> Next Page</button>
+      <Routes>
+        <Route path="/" element={<ViewCharacters />}></Route>
+        <Route path="/character">
+          <Route path=":id" element={<DescriptionCharacter />} />
+        </Route>
+      </Routes>
     </div>
   );
 }

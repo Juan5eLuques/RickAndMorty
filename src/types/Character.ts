@@ -1,10 +1,15 @@
 export type Character = {
-  id: number;
-  name: string;
-  image: string;
-  gender: string;
-  specie: string;
-  status: string;
+  id: number | undefined;
+  name: string | undefined;
+  image: string | undefined;
+  gender: string | undefined;
+  species: string | undefined;
+  status: string | undefined;
+};
+
+export type CharacterCardType = Character & {
+  width: number;
+  height: number;
 };
 
 export type CharacterLocation = {

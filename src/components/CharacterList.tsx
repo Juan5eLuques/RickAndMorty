@@ -1,26 +1,37 @@
-import React, { useState } from "react";
+import { Grid } from "@mui/material";
 import { useCharacter } from "../hooks/useCharacters";
 import { Character } from "../types/Character";
+import { CardCharacter } from "./CardCharacter";
 
 type PropsList = {
   page: number;
 };
 
-export const CharacterList = ({ page }: PropsList) => {
+export const CharacterList: React.FC<PropsList> = ({ page }: PropsList) => {
   const { character } = useCharacter(page);
 
   return (
-    <div>
-      {" "}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)" }}>
-        {character.map((item: Character) => (
-          <div key={item.id}>
-            <img src={item.image}></img>
-            <h2>{item.name}</h2>
-            <p>{item.gender}</p>
-          </div>
-        ))}
-      </div>
-    </div>
+    <Grid
+      container
+      spacing={1}
+      gap={10}
+      paddingTop={10}
+      justifyContent={"center"}
+      alignContent={"center"}
+    >
+      {character.map((item: Character) => (
+        <CardCharacter
+          key={item.id}
+          gender={item.gender}
+          species={item.species}
+          status={item.status}
+          name={item.name}
+          id={item.id}
+          image={item.image}
+          width={250}
+          height={250}
+        />
+      ))}
+    </Grid>
   );
 };
