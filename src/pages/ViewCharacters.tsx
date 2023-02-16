@@ -1,36 +1,35 @@
-import { Button, Pagination, Stack } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import { CharacterList } from "../components/CharacterList";
-import { SearchBar } from "../components/Search";
+import { PaginationComponent } from "../components/Pagination";
+import SearchContextProvider from "../context/searchContext";
+import { useCharacter } from "../hooks/useCharacters";
 
 export const ViewCharacters: React.FC = () => {
-  const [page, setPage] = React.useState(1);
-  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-    setPage(value);
+  const { character, setCurrentPage, pagesOfSearch, currentPage } =
+    useCharacter();
+
+  const navigate = useNavigate();
+
+  const handleChangePage = (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
+    event.preventDefault();
+    setCurrentPage(value);
+    navigate(`?page=${value}`);
   };
+
   return (
     <div>
-      {" "}
-      <SearchBar></SearchBar>
-      <CharacterList page={page} />
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          margin: "40px",
-        }}
-      >
-        <Stack spacing={2}>
-          <Pagination
-            count={42}
-            variant="outlined"
-            shape="rounded"
-            page={page}
-            onChange={handleChange}
-          />
-        </Stack>
-      </div>
+      <SearchContextProvider>
+        <CharacterList character={character} />
+        <PaginationComponent
+          currentPage={currentPage}
+          handleChange={handleChangePage}
+          pagesOfSearch={pagesOfSearch}
+        />
+      </SearchContextProvider>
     </div>
   );
 };
