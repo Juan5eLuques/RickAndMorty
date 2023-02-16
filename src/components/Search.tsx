@@ -6,6 +6,8 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
+import { useSearch } from "../hooks/useSearch";
+import { useNavigate } from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -48,7 +50,18 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export const SearchBar: React.FC = () => {
+export const SearchBar: React.FC = (handleChangeSearch) => {
+  const { handleChange, search } = useSearch();
+
+  const navigate = useNavigate();
+
+  function handleClick(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (search) {
+      navigate(`?name=${search}`);
+    } else navigate(`/`);
+  }
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -73,10 +86,17 @@ export const SearchBar: React.FC = () => {
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-            />
+            <form
+              onSubmit={(e: React.FormEvent<HTMLFormElement>) => handleClick(e)}
+            >
+              <StyledInputBase
+                placeholder="Search…"
+                inputProps={{ "aria-label": "search" }}
+                onChange={(
+                  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+                ) => handleChange(e.target.value)}
+              />
+            </form>
           </Search>
         </Toolbar>
       </AppBar>

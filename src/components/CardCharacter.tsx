@@ -16,6 +16,8 @@ export const CardCharacter: React.FC<CharacterCardType> = ({
   species,
   height,
   width,
+  gender,
+  status,
 }: CharacterCardType) => {
   return (
     <Card
