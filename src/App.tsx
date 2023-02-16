@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router-dom";
 import { SearchBar } from "./components/Search";
-import { SearchContextProvider } from "./context/searchContext";
 import { DescriptionCharacter } from "./pages/DescriptionCharacter";
 import { ViewCharacters } from "./pages/ViewCharacters";
 
@@ -12,6 +11,7 @@ function App() {
         <Route path="/" element={<ViewCharacters />}></Route>
         <Route path="/character">
           <Route path=":id" element={<DescriptionCharacter />} />
+          <Route path=":name" element={<ViewCharacters />} />
         </Route>
       </Routes>
     </div>

@@ -1,4 +1,5 @@
-import React from "react";
+import { Context } from "../context/searchContext";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { CharacterList } from "../components/CharacterList";
 import { PaginationComponent } from "../components/Pagination";
@@ -9,6 +10,8 @@ export const ViewCharacters: React.FC = () => {
   const { character, setCurrentPage, pagesOfSearch, currentPage } =
     useCharacter();
 
+  const { searchContext } = useContext(Context);
+
   const navigate = useNavigate();
 
   const handleChangePage = (
@@ -17,7 +20,9 @@ export const ViewCharacters: React.FC = () => {
   ) => {
     event.preventDefault();
     setCurrentPage(value);
-    navigate(`?page=${value}`);
+    if (searchContext !== "") {
+      navigate(`?name=${searchContext}&page=${value}`);
+    } else navigate(`?page=${value}`);
   };
 
   return (
