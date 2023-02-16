@@ -1,12 +1,20 @@
-import { createContext, ReactNode, useState } from "react";
-
-const Context = createContext({});
+import { createContext, ReactNode, SetStateAction, useState } from "react";
 
 type Props = {
   children: ReactNode;
 };
 
-export const SearchContextProvider = ({ children }: Props) => {
+type ContextProps = {
+  searchContext: string;
+  setSearchContext: React.Dispatch<SetStateAction<string>>;
+};
+
+export const Context = createContext<ContextProps>({
+  searchContext: "",
+  setSearchContext: () => {},
+});
+
+const SearchContextProvider = ({ children }: Props) => {
   const [searchContext, setSearchContext] = useState<string>("");
 
   return (

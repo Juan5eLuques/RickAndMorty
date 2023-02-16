@@ -2,8 +2,7 @@ import { QueryParams } from "./../types/QueryParams";
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Character } from "../types/Character";
-
-let API_URL = "https://rickandmortyapi.com/api/character/";
+import { useLocation } from "react-router-dom";
 
 export const useCharacter = () => {
   const [character, setCharacter] = useState<Character[]>([]);
@@ -20,7 +19,7 @@ export const useCharacter = () => {
   };
 
   useEffect(() => {
-    API_URL = "https://rickandmortyapi.com/api/character/";
+    let API_URL = "https://rickandmortyapi.com/api/character/";
 
     const params: Array<QueryParams> = [];
     for (const entry of searchParams.entries()) {
@@ -34,6 +33,7 @@ export const useCharacter = () => {
         else API_URL += `&${item.key}=${item.value}`;
       });
     }
+
     const reqAPI = fetch(API_URL)
       .then((res) => res.json())
       .then((res) => {

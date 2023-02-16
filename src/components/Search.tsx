@@ -8,6 +8,8 @@ import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import { useSearch } from "../hooks/useSearch";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { Context } from "../context/searchContext";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -59,8 +61,14 @@ export const SearchBar: React.FC = (handleChangeSearch) => {
     event.preventDefault();
     if (search) {
       navigate(`?name=${search}`);
-    } else navigate(`/`);
+      setSearchContext(search);
+    } else {
+      setSearchContext("");
+      navigate(`/`);
+    }
   }
+
+  const { setSearchContext } = useContext(Context);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
